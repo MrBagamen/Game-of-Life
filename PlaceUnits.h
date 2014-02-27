@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <math.h>
+#include <stdio.h>
 #include "Grid.h"
 
 struct PlaceUnits

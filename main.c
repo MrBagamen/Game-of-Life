@@ -40,6 +40,10 @@ int main(int argc, char** argv)
 
     //Units
     grid.grid_states[4] = 1;
+    grid.grid_states[10] = 1;
+    grid.grid_states[50] = 1;
+    grid.grid_states[51] = 1;
+    grid.grid_states[1937] = 1;
     struct Unit unit;
     unit.size = 20;
     unit.x = 0;

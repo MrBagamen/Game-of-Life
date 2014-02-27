@@ -17,6 +17,7 @@ struct e
     SDL_Event event;
     SDL_GLContext glc;
     bool is_running;
+    bool mouseButton;
 }e;
 
 int main(int argc, char** argv)
@@ -61,6 +62,13 @@ int main(int argc, char** argv)
             {
             case SDL_QUIT:
                 e.is_running = false;
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                e.mouseButton = true;
+                break;
+            case SDL_MOUSEBUTTONUP:
+                e.mouseButton = false;
+                break;
             default:;
             }
         }
@@ -68,7 +76,7 @@ int main(int argc, char** argv)
 
         //Render shit
         drawUnit(&unit, &grid);
-        placeUnits(&grid);
+        placeUnits(&grid, e.event, e.mouseButton);
         drawGrid(&grid);
 
 
@@ -89,6 +97,7 @@ bool Init()
     SDL_Init(SDL_INIT_EVERYTHING);
     e.window = SDL_CreateWindow("Game of Life", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1020, 760, SDL_WINDOW_OPENGL);
     e.glc = SDL_GL_CreateContext(e.window);
+    e.mouseButton = false;
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();

@@ -6,10 +6,14 @@
 #include <stdio.h>
 #include "Grid.h"
 
+#define bool char
+#define true 1
+#define false 0
+
 struct PlaceUnits
 {
 
 };
-void placeUnits(struct Grid *g);
+void placeUnits(struct Grid *g, SDL_Event evt, bool mouseButton);
 
 #endif

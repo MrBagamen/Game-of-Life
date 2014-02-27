@@ -1,6 +1,6 @@
 #include "PlaceUnits.h"
 
-void placeUnits(struct Grid *g)
+void placeUnits(struct Grid *g, SDL_Event evt, bool mouseButton)
 {
     int mx = NULL, my = NULL;
     int index;
@@ -14,4 +14,16 @@ void placeUnits(struct Grid *g)
     index = floor(my/g->size) * (g->width/g->size) + floor(mx / g->size);
     printf("Cell number %d\n", index);
     fflush(stdout);
+
+    if(mouseButton)
+    {
+        if(evt.button.button == SDL_BUTTON_LEFT)
+        {
+            g->grid_states[index] = 1;
+        }
+        if(evt.button.button == SDL_BUTTON_RIGHT)
+        {
+            g->grid_states[index] = 0;
+        }
+    }
 }

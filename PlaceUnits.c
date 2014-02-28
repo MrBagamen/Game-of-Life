@@ -1,9 +1,8 @@
 #include "PlaceUnits.h"
 #include "Unit.h"
 
-void placeUnits(struct Grid *g, SDL_Event evt, bool mouseButton)
+void modUnits(struct Grid *g, int mx, int my, ModType type)
 {
-    int mx = 0, my = 0;
     int index;
 
     SDL_GetMouseState(&mx, &my);
@@ -16,15 +15,12 @@ void placeUnits(struct Grid *g, SDL_Event evt, bool mouseButton)
     //printf("Cell number %d\n", index);
     //fflush(stdout);
 
-    if(mouseButton)
+    if(type == MOD_ADD)
     {
-        if(evt.button.button == SDL_BUTTON_LEFT)
-        {
-            g->grid_states[index] = 1;
-        }
-        if(evt.button.button == SDL_BUTTON_RIGHT)
-        {
-            g->grid_states[index] = 0;
-        }
+        g->grid_states[index] = 1;
+    }
+    else if(type == MOD_REMOVE)
+    {
+        g->grid_states[index] = 0;
     }
 }

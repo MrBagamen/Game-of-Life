@@ -15,11 +15,8 @@ bool Init();
 struct e
 {
     SDL_Window *window;
-    SDL_Event event;
     SDL_GLContext glc;
     bool is_running;
-    bool mouseButton;
-    bool keyDown[317];
     bool cycle;
 }e;
 
@@ -47,57 +44,60 @@ int main(int argc, char** argv)
     unit.x = 0;
     unit.y = 0;
 
-    //Key input
-    memset(e.keyDown, false, 317);
-
     while(e.is_running)
     {
-        while(SDL_PollEvent(&e.event))
+        SDL_Event event;
+
+        while(SDL_PollEvent(&event))
         {
-            switch(e.event.type)
+            switch(event.type)
             {
             case SDL_QUIT:
                 e.is_running = false;
                 break;
-            case SDL_MOUSEBUTTONDOWN:
-                e.mouseButton = true;
-                break;
-            case SDL_MOUSEBUTTONUP:
-                e.mouseButton = false;
-                break;
             case SDL_KEYDOWN:
-                e.keyDown[e.event.key.keysym.sym ] = true;
+                if (!event.key.repeat)
+                {
+                    if (event.key.keysym.sym == SDLK_ESCAPE)
+                    {
+                        e.is_running = false;
+                    }
+                    else if (event.key.keysym.sym == SDLK_SPACE)
+                    {
+                        printf("SPACE DOWN");
+                        fflush(stdout);
+                        e.cycle = !e.cycle;
+                    }
+                }
                 break;
-            case SDL_KEYUP:
-                e.keyDown[e.event.key.keysym.sym] = false;
-                break;
-                default:;
+            default:;
             }
         }
-        glClear(GL_COLOR_BUFFER_BIT);
-        if(e.keyDown[SDLK_ESCAPE])
-        {
-            e.is_running = false;
+
+        int mx, my;
+        Uint32 state = SDL_GetMouseState(&mx, &my);
+
+        if (state & SDL_BUTTON(1)) {
+            modUnits(&grid, mx, my, MOD_ADD);
         }
-        if(e.keyDown[SDLK_SPACE])
-        {
-            e.cycle = !e.cycle;
+        else if (state & SDL_BUTTON(3)) {
+            modUnits(&grid, mx, my, MOD_REMOVE);
         }
 
-        //Render shit
-        drawUnit(&unit, &grid);
-        placeUnits(&grid, e.event, e.mouseButton);
-        drawGrid(&grid);
         if(e.cycle)
         {
             unitCycle(&grid);
         }
 
+        //Render shit
+        glClear(GL_COLOR_BUFFER_BIT);
+        drawUnit(&unit, &grid);
+        drawGrid(&grid);
 
         SDL_GL_SwapWindow(e.window);
-
         SDL_Delay(16);
     }
+
     free(grid.grid_states);
     SDL_GL_DeleteContext(e.glc);
     SDL_DestroyWindow(e.window);
@@ -110,7 +110,6 @@ bool Init()
     SDL_Init(SDL_INIT_EVERYTHING);
     e.window = SDL_CreateWindow("Game of Life", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1020, 760, SDL_WINDOW_OPENGL);
     e.glc = SDL_GL_CreateContext(e.window);
-    e.mouseButton = false;
     e.cycle = false;
 
     glMatrixMode(GL_PROJECTION);

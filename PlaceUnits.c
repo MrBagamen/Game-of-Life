@@ -3,7 +3,7 @@
 
 void placeUnits(struct Grid *g, SDL_Event evt, bool mouseButton)
 {
-    int mx = NULL, my = NULL;
+    int mx = 0, my = 0;
     int index;
 
     SDL_GetMouseState(&mx, &my);

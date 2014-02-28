@@ -3,6 +3,6 @@
 
 #include "Grid.h"
 
-void countNeighbours(struct Grid *g);
+void unitCycle(struct Grid *g);
 
 #endif

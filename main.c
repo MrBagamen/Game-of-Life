@@ -68,10 +68,10 @@ int main(int argc, char** argv)
             case SDL_KEYDOWN:
                 e.keyDown[e.event.key.keysym.sym ] = true;
                 break;
-            default:;
             case SDL_KEYUP:
                 e.keyDown[e.event.key.keysym.sym] = false;
                 break;
+                default:;
             }
         }
         glClear(GL_COLOR_BUFFER_BIT);
@@ -90,7 +90,7 @@ int main(int argc, char** argv)
         drawGrid(&grid);
         if(e.cycle)
         {
-            countNeighbours(&grid);
+            unitCycle(&grid);
         }
 
 

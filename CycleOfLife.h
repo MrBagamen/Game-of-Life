@@ -3,6 +3,6 @@
 
 #include "Grid.h"
 
-void cycleOfLife(struct Grid *g);
+void countNeighbours(struct Grid *g);
 
 #endif

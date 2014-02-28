@@ -90,7 +90,7 @@ int main(int argc, char** argv)
         drawGrid(&grid);
         if(e.cycle)
         {
-            cycleOfLife(&grid);
+            countNeighbours(&grid);
         }
 
 

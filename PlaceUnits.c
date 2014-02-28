@@ -12,8 +12,8 @@ void placeUnits(struct Grid *g, SDL_Event evt, bool mouseButton)
 
     SDL_GetMouseState(&mx, &my);
     index = floor(my/g->size) * (g->width/g->size) + floor(mx / g->size);
-    printf("Cell number %d\n", index);
-    fflush(stdout);
+    //printf("Cell number %d\n", index);
+    //fflush(stdout);
 
     if(mouseButton)
     {

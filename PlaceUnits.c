@@ -1,4 +1,5 @@
 #include "PlaceUnits.h"
+#include "Unit.h"
 
 void placeUnits(struct Grid *g, SDL_Event evt, bool mouseButton)
 {

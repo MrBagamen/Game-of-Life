@@ -1,17 +1,9 @@
 #include "PlaceUnits.h"
 #include "Unit.h"
 
-void modUnits(struct Grid *g, int mx, int my, ModType type)
+void modUnits(struct Grid *g, int x, int y, ModType type)
 {
-    int index;
-
-    SDL_GetMouseState(&mx, &my);
-    mx = floor(mx/g->size) * g->size;
-    my = floor(my/g->size) * g->size;
-    drawUnitOnMousePos(mx, my);
-
-    SDL_GetMouseState(&mx, &my);
-    index = floor(my/g->size) * (g->width/g->size) + floor(mx / g->size);
+    int index = floor(y/g->size) * (g->width/g->size) + floor(x / g->size);
     //printf("Cell number %d\n", index);
     //fflush(stdout);
 

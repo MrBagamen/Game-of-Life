@@ -15,6 +15,6 @@ typedef enum {
     MOD_REMOVE
 } ModType;
 
-void modUnits(struct Grid *g, int mx, int my, ModType type);
+void modUnits(struct Grid *g, int x, int y, ModType type);
 
 #endif

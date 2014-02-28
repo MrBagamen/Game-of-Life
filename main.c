@@ -76,12 +76,14 @@ int main(int argc, char** argv)
 
         int mx, my;
         Uint32 state = SDL_GetMouseState(&mx, &my);
+        int x = floor(mx/grid.size) * grid.size;
+        int y = floor(my/grid.size) * grid.size;
 
         if (state & SDL_BUTTON(1)) {
-            modUnits(&grid, mx, my, MOD_ADD);
+            modUnits(&grid, x, y, MOD_ADD);
         }
         else if (state & SDL_BUTTON(3)) {
-            modUnits(&grid, mx, my, MOD_REMOVE);
+            modUnits(&grid, x, y, MOD_REMOVE);
         }
 
         if(e.cycle)
@@ -92,6 +94,7 @@ int main(int argc, char** argv)
         //Render shit
         glClear(GL_COLOR_BUFFER_BIT);
         drawUnit(&unit, &grid);
+        drawUnitOnMousePos(x, y);
         drawGrid(&grid);
 
         SDL_GL_SwapWindow(e.window);

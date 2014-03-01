@@ -64,8 +64,6 @@ int main(int argc, char** argv)
                     }
                     else if (event.key.keysym.sym == SDLK_SPACE)
                     {
-                        printf("SPACE DOWN");
-                        fflush(stdout);
                         e.cycle = !e.cycle;
                     }
                 }

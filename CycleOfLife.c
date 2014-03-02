@@ -63,36 +63,45 @@ int countNeighbours(struct Grid *g, int i)
     {
         neighbours++;
     }
+
     return neighbours;
 }
 
 
 void unitCycle(struct Grid *g)
 {
+    int cellsToRemove[1000];
+    int cellsToAdd[1000];
+    int indexR = 0;
+    int indexA = 0;
     for(int i = 0; i < (g->width/g->size)*(g->height/g->size); i++)
     {
         int neighbours = countNeighbours(g, i);
+
         if(g->grid_states[i] == 1)
         {
-            if(neighbours < 2)
+            if(neighbours != 3 && neighbours != 2)
             {
-                g->grid_states[i] = 0;
-            }
-            if(neighbours == 2 || neighbours == 3)
-            {
-                g->grid_states[i] = 1;
-            }
-            if(neighbours > 3)
-            {
-                g->grid_states[i] = 0;
+                cellsToRemove[indexR] = i;
+                indexR++;
             }
         }
         if(g->grid_states[i] == 0)
         {
             if(neighbours == 3)
             {
-                g->grid_states[i] = 1;
+                cellsToAdd[indexA] = i;
+                indexA++;
             }
         }
+    }
+
+    for(int i = 0; i < indexA; i++)
+    {
+        g->grid_states[cellsToAdd[i]] = 1;
+    }
+    for(int i = 0; i < indexR; i++)
+    {
+        g->grid_states[cellsToRemove[i]] = 0;
     }
 }
